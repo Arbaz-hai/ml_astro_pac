@@ -11,7 +11,7 @@ from tqdm import tqdm
 
 # Set random seed for reproducibility
 torch.manual_seed(42)
-np.random.seed(42)
+np.random.seed(67)
 
 # Custom dataset class for time series data with metadata
 class AstroTimeSeriesDataset(Dataset):
