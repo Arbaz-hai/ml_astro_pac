@@ -1,0 +1,124 @@
+Using target_id for classification with 14 classes
+Using device: cuda
+Epoch 1/100: 100%|██████████| 99/99 [00:36<00:00,  2.75it/s]
+/usr/local/lib/python3.10/dist-packages/torch/nn/modules/transformer.py:502: UserWarning: The PyTorch API of nested tensors is in prototype stage and will change in the near future. (Triggered internally at ../aten/src/ATen/NestedTensorImpl.cpp:178.)
+  output = torch._nested_tensor_from_mask(
+Epoch 1/100, LR: 0.000200, Train Loss: 2.3364, Val Loss: 1.7565, Val Accuracy: 53.18%
+Epoch 2/100: 100%|██████████| 99/99 [00:36<00:00,  2.74it/s]
+Epoch 2/100, LR: 0.000400, Train Loss: 1.8584, Val Loss: 1.5112, Val Accuracy: 61.27%
+Epoch 3/100: 100%|██████████| 99/99 [00:35<00:00,  2.75it/s]
+Epoch 3/100, LR: 0.000600, Train Loss: 1.6426, Val Loss: 1.4842, Val Accuracy: 62.23%
+Epoch 4/100: 100%|██████████| 99/99 [00:35<00:00,  2.76it/s]
+Epoch 4/100, LR: 0.000800, Train Loss: 1.5697, Val Loss: 1.3442, Val Accuracy: 67.32%
+Epoch 5/100: 100%|██████████| 99/99 [00:35<00:00,  2.78it/s]
+Epoch 5/100, LR: 0.001000, Train Loss: 1.4400, Val Loss: 1.3250, Val Accuracy: 67.26%
+Epoch 6/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 6/100, LR: 0.001000, Train Loss: 1.4833, Val Loss: 1.3153, Val Accuracy: 67.71%
+Epoch 7/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 7/100, LR: 0.001000, Train Loss: 1.4438, Val Loss: 1.2248, Val Accuracy: 71.34%
+Epoch 8/100: 100%|██████████| 99/99 [00:35<00:00,  2.79it/s]
+Epoch 8/100, LR: 0.000999, Train Loss: 1.3896, Val Loss: 1.2578, Val Accuracy: 68.85%
+Epoch 9/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 9/100, LR: 0.000998, Train Loss: 1.4121, Val Loss: 1.2302, Val Accuracy: 70.89%
+Epoch 10/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 10/100, LR: 0.000996, Train Loss: 1.3619, Val Loss: 1.2840, Val Accuracy: 69.24%
+Epoch 11/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 11/100, LR: 0.000993, Train Loss: 1.3993, Val Loss: 1.2087, Val Accuracy: 71.21%
+Epoch 12/100: 100%|██████████| 99/99 [00:35<00:00,  2.79it/s]
+Epoch 12/100, LR: 0.000990, Train Loss: 1.3708, Val Loss: 1.2236, Val Accuracy: 71.15%
+Epoch 13/100: 100%|██████████| 99/99 [00:34<00:00,  2.83it/s]
+Epoch 13/100, LR: 0.000987, Train Loss: 1.3685, Val Loss: 1.2443, Val Accuracy: 71.34%
+Epoch 14/100: 100%|██████████| 99/99 [00:34<00:00,  2.83it/s]
+Epoch 14/100, LR: 0.000983, Train Loss: 1.4041, Val Loss: 1.2079, Val Accuracy: 71.53%
+Epoch 15/100: 100%|██████████| 99/99 [00:34<00:00,  2.85it/s]
+Epoch 15/100, LR: 0.000978, Train Loss: 1.4026, Val Loss: 1.1977, Val Accuracy: 72.48%
+Epoch 16/100: 100%|██████████| 99/99 [00:34<00:00,  2.84it/s]
+Epoch 16/100, LR: 0.000973, Train Loss: 1.3578, Val Loss: 1.2299, Val Accuracy: 71.27%
+Epoch 17/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 17/100, LR: 0.000967, Train Loss: 1.2901, Val Loss: 1.2084, Val Accuracy: 71.21%
+Epoch 18/100: 100%|██████████| 99/99 [00:34<00:00,  2.84it/s]
+Epoch 18/100, LR: 0.000961, Train Loss: 1.3074, Val Loss: 1.1988, Val Accuracy: 72.74%
+Epoch 19/100: 100%|██████████| 99/99 [00:34<00:00,  2.86it/s]
+Epoch 19/100, LR: 0.000955, Train Loss: 1.3630, Val Loss: 1.2202, Val Accuracy: 71.08%
+Epoch 20/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 20/100, LR: 0.000947, Train Loss: 1.3366, Val Loss: 1.1912, Val Accuracy: 71.59%
+Epoch 21/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 21/100, LR: 0.000940, Train Loss: 1.3293, Val Loss: 1.1895, Val Accuracy: 72.93%
+Epoch 22/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 22/100, LR: 0.000932, Train Loss: 1.3433, Val Loss: 1.2128, Val Accuracy: 71.53%
+Epoch 23/100: 100%|██████████| 99/99 [00:34<00:00,  2.83it/s]
+Epoch 23/100, LR: 0.000923, Train Loss: 1.3602, Val Loss: 1.1991, Val Accuracy: 71.40%
+Epoch 24/100: 100%|██████████| 99/99 [00:36<00:00,  2.74it/s]
+Epoch 24/100, LR: 0.000914, Train Loss: 1.2956, Val Loss: 1.1927, Val Accuracy: 71.66%
+Epoch 25/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 25/100, LR: 0.000905, Train Loss: 1.2955, Val Loss: 1.1893, Val Accuracy: 72.17%
+Epoch 26/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 26/100, LR: 0.000895, Train Loss: 1.3201, Val Loss: 1.1905, Val Accuracy: 73.57%
+Epoch 27/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 27/100, LR: 0.000884, Train Loss: 1.3180, Val Loss: 1.2422, Val Accuracy: 71.15%
+Epoch 28/100: 100%|██████████| 99/99 [00:35<00:00,  2.79it/s]
+Epoch 28/100, LR: 0.000874, Train Loss: 1.2945, Val Loss: 1.1823, Val Accuracy: 72.99%
+Epoch 29/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 29/100, LR: 0.000862, Train Loss: 1.2736, Val Loss: 1.1970, Val Accuracy: 72.42%
+Epoch 30/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 30/100, LR: 0.000851, Train Loss: 1.3002, Val Loss: 1.1649, Val Accuracy: 73.06%
+Epoch 31/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 31/100, LR: 0.000839, Train Loss: 1.3121, Val Loss: 1.1778, Val Accuracy: 72.99%
+Epoch 32/100: 100%|██████████| 99/99 [00:34<00:00,  2.83it/s]
+Epoch 32/100, LR: 0.000826, Train Loss: 1.2858, Val Loss: 1.1912, Val Accuracy: 72.80%
+Epoch 33/100: 100%|██████████| 99/99 [00:34<00:00,  2.84it/s]
+Epoch 33/100, LR: 0.000814, Train Loss: 1.2793, Val Loss: 1.1819, Val Accuracy: 71.78%
+Epoch 34/100: 100%|██████████| 99/99 [00:35<00:00,  2.80it/s]
+Epoch 34/100, LR: 0.000801, Train Loss: 1.3085, Val Loss: 1.1959, Val Accuracy: 71.91%
+Epoch 35/100: 100%|██████████| 99/99 [00:34<00:00,  2.83it/s]
+Epoch 35/100, LR: 0.000787, Train Loss: 1.2870, Val Loss: 1.2055, Val Accuracy: 71.40%
+Epoch 36/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 36/100, LR: 0.000774, Train Loss: 1.3119, Val Loss: 1.1674, Val Accuracy: 72.93%
+Epoch 37/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 37/100, LR: 0.000760, Train Loss: 1.2637, Val Loss: 1.1879, Val Accuracy: 71.46%
+Epoch 38/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 38/100, LR: 0.000745, Train Loss: 1.2440, Val Loss: 1.2347, Val Accuracy: 69.30%
+Epoch 39/100: 100%|██████████| 99/99 [00:35<00:00,  2.80it/s]
+Epoch 39/100, LR: 0.000731, Train Loss: 1.2860, Val Loss: 1.2166, Val Accuracy: 70.76%
+Epoch 40/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 40/100, LR: 0.000716, Train Loss: 1.2708, Val Loss: 1.1607, Val Accuracy: 73.25%
+Epoch 41/100: 100%|██████████| 99/99 [00:34<00:00,  2.84it/s]
+Epoch 41/100, LR: 0.000701, Train Loss: 1.2716, Val Loss: 1.1812, Val Accuracy: 72.10%
+Epoch 42/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 42/100, LR: 0.000686, Train Loss: 1.2852, Val Loss: 1.1935, Val Accuracy: 72.10%
+Epoch 43/100: 100%|██████████| 99/99 [00:34<00:00,  2.83it/s]
+Epoch 43/100, LR: 0.000670, Train Loss: 1.2438, Val Loss: 1.1450, Val Accuracy: 73.82%
+Epoch 44/100: 100%|██████████| 99/99 [00:34<00:00,  2.83it/s]
+Epoch 44/100, LR: 0.000655, Train Loss: 1.2514, Val Loss: 1.1690, Val Accuracy: 73.76%
+Epoch 45/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 45/100, LR: 0.000639, Train Loss: 1.2842, Val Loss: 1.2088, Val Accuracy: 70.83%
+Epoch 46/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 46/100, LR: 0.000623, Train Loss: 1.2258, Val Loss: 1.1469, Val Accuracy: 74.46%
+Epoch 47/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 47/100, LR: 0.000607, Train Loss: 1.2673, Val Loss: 1.1700, Val Accuracy: 73.76%
+Epoch 48/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 48/100, LR: 0.000591, Train Loss: 1.2597, Val Loss: 1.1881, Val Accuracy: 72.74%
+Epoch 49/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 49/100, LR: 0.000575, Train Loss: 1.2515, Val Loss: 1.1548, Val Accuracy: 74.52%
+Epoch 50/100: 100%|██████████| 99/99 [00:35<00:00,  2.78it/s]
+Epoch 50/100, LR: 0.000558, Train Loss: 1.2679, Val Loss: 1.1662, Val Accuracy: 74.01%
+Epoch 51/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 51/100, LR: 0.000542, Train Loss: 1.2469, Val Loss: 1.1620, Val Accuracy: 73.89%
+Epoch 52/100: 100%|██████████| 99/99 [00:34<00:00,  2.83it/s]
+Epoch 52/100, LR: 0.000525, Train Loss: 1.2455, Val Loss: 1.1479, Val Accuracy: 74.01%
+Epoch 53/100: 100%|██████████| 99/99 [00:35<00:00,  2.83it/s]
+Epoch 53/100, LR: 0.000509, Train Loss: 1.2004, Val Loss: 1.1718, Val Accuracy: 73.44%
+Epoch 54/100: 100%|██████████| 99/99 [00:35<00:00,  2.80it/s]
+Epoch 54/100, LR: 0.000492, Train Loss: 1.2840, Val Loss: 1.1505, Val Accuracy: 74.84%
+Epoch 55/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 55/100, LR: 0.000476, Train Loss: 1.1879, Val Loss: 1.1641, Val Accuracy: 73.12%
+Epoch 56/100: 100%|██████████| 99/99 [00:34<00:00,  2.83it/s]
+Epoch 56/100, LR: 0.000459, Train Loss: 1.2059, Val Loss: 1.1763, Val Accuracy: 73.06%
+Epoch 57/100: 100%|██████████| 99/99 [00:35<00:00,  2.81it/s]
+Epoch 57/100, LR: 0.000443, Train Loss: 1.1958, Val Loss: 1.1523, Val Accuracy: 74.71%
+Epoch 58/100: 100%|██████████| 99/99 [00:35<00:00,  2.82it/s]
+Epoch 58/100, LR: 0.000426, Train Loss: 1.2036, Val Loss: 1.1669, Val Accuracy: 74.52%
+Early stopping at epoch 58
+Predicting: 100%|██████████| 25/25 [00:08<00:00,  3.04it/s]
+Prediction complete. Results saved to 'submission_with_probabilities.csv'
+ 

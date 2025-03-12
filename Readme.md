@@ -43,3 +43,5 @@ Each row represents an observation at a specific time and passband:
 - Milky Way objects have redshift of zero
 - Flux can be negative due to statistical fluctuations
 - Approximately 1% of data comes from DDF subset
+
+NOTE: I don't know why but I got the best model fit when I used this architecture instead of only attention

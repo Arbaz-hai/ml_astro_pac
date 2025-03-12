@@ -134,29 +134,32 @@ class AstroTimeSeriesDataset(Dataset):
             return sequence_tensor, mask_tensor, metadata_tensor, torch.tensor(label, dtype=torch.long)
 
 # Define the model architecture
+import torch
+import torch.nn as nn
+
 class AstroClassifier(nn.Module):
-    def __init__(self, input_dim=4, hidden_dim=128, metadata_dim=6, num_layers=2, dropout=0.3, num_classes=14):
+    def __init__(self, input_dim=4, hidden_dim=128, metadata_dim=6, dropout=0.3, num_classes=14, num_heads=4, num_transformer_layers=2):
         super(AstroClassifier, self).__init__()
         
-        self.hidden_dim = hidden_dim
-        self.num_layers = num_layers
         self.num_passbands = 6
         
-        # LSTM for each passband
-        self.lstm = nn.LSTM(
-            input_size=input_dim,
-            hidden_size=hidden_dim,
-            num_layers=num_layers,
-            batch_first=True,
-            dropout=dropout if num_layers > 1 else 0,
-            bidirectional=True
-        )
+        # Input projection to increase dimensionality
+        self.input_projection = nn.Linear(input_dim, hidden_dim)
         
-        # Attention mechanism
-        self.attention = nn.Sequential(
-            nn.Linear(hidden_dim * 2, 64),
-            nn.Tanh(),
-            nn.Linear(64, 1)
+        # Positional encoding can be learned or fixed
+        self.pos_encoder = nn.Parameter(torch.zeros(1, 1000, hidden_dim))  # Assuming max sequence length of 1000
+        
+        # Transformer encoder layers
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=hidden_dim,
+            nhead=num_heads,
+            dim_feedforward=hidden_dim*4,
+            dropout=dropout,
+            batch_first=True
+        )
+        self.transformer_encoder = nn.TransformerEncoder(
+            encoder_layer, 
+            num_layers=num_transformer_layers
         )
         
         # Metadata processing
@@ -168,7 +171,7 @@ class AstroClassifier(nn.Module):
         )
         
         # Fully connected layers
-        combined_dim = hidden_dim * 2 * self.num_passbands + 64  # LSTM + metadata
+        combined_dim = hidden_dim * self.num_passbands + 64  # Transformer output + metadata
         
         self.fc_layers = nn.Sequential(
             nn.Linear(combined_dim, 256),
@@ -179,7 +182,7 @@ class AstroClassifier(nn.Module):
             nn.Linear(256, 128),
             nn.ReLU(),
             nn.BatchNorm1d(128),
-            nn.Dropout(dropout/2),  # Less dropout in later layers
+            nn.Dropout(dropout/2),
             
             nn.Linear(128, 64),
             nn.ReLU(),
@@ -190,51 +193,51 @@ class AstroClassifier(nn.Module):
         # Output layer
         self.output = nn.Linear(64, num_classes)
         
-    def apply_attention(self, lstm_output, mask):
-        # lstm_output shape: (batch_size, seq_len, hidden_dim*2)
+    def process_sequence(self, x, mask):
+        # x shape: (batch_size, seq_len, input_dim)
         # mask shape: (batch_size, seq_len)
+        seq_len = x.size(1)
         
-        # Calculate attention scores
-        attn_scores = self.attention(lstm_output)  # (batch_size, seq_len, 1)
+        # Project input to higher dimension
+        x = self.input_projection(x)  # (batch_size, seq_len, hidden_dim)
         
-        # Apply mask: set attention scores to -inf for padded positions
-        mask = mask.unsqueeze(2)  # (batch_size, seq_len, 1)
-        attn_scores = attn_scores.masked_fill(mask == 0, -1e10)
+        # Add positional encoding
+        x = x + self.pos_encoder[:, :seq_len, :]
         
-        # Apply softmax to get attention weights
-        attn_weights = torch.softmax(attn_scores, dim=1)  # (batch_size, seq_len, 1)
+        # Create padding mask for transformer (True values are masked positions)
+        padding_mask = ~mask.bool()  # (batch_size, seq_len)
         
-        # Apply attention weights to LSTM outputs
-        context = torch.bmm(lstm_output.transpose(1, 2), attn_weights)  # (batch_size, hidden_dim*2, 1)
-        context = context.squeeze(2)  # (batch_size, hidden_dim*2)
+        # Apply transformer encoder
+        transformer_output = self.transformer_encoder(x, src_key_padding_mask=padding_mask)
         
-        return context
+        # Get sequence representation (mean of non-padded elements)
+        expanded_mask = mask.unsqueeze(-1).expand_as(transformer_output)
+        masked_sum = (transformer_output * expanded_mask).sum(dim=1)
+        seq_repr = masked_sum / mask.sum(dim=1, keepdim=True).clamp(min=1)  # Avoid division by zero
+        
+        return seq_repr
     
     def forward(self, x, mask, metadata):
         # x shape: (batch_size, num_passbands, seq_len, input_dim)
         # mask shape: (batch_size, num_passbands, seq_len)
         # metadata shape: (batch_size, metadata_dim)
-        batch_size = x.size(0)
         
         # Process metadata
         metadata_features = self.metadata_fc(metadata)  # (batch_size, 64)
         
         # Process each passband separately
-        passband_contexts = []
+        passband_representations = []
         for i in range(self.num_passbands):
             # Get data for this passband
             passband_data = x[:, i, :, :]  # (batch_size, seq_len, input_dim)
             passband_mask = mask[:, i, :]  # (batch_size, seq_len)
             
-            # Pass through LSTM
-            lstm_out, _ = self.lstm(passband_data)  # (batch_size, seq_len, hidden_dim*2)
-            
-            # Apply attention with mask
-            context = self.apply_attention(lstm_out, passband_mask)  # (batch_size, hidden_dim*2)
-            passband_contexts.append(context)
+            # Process sequence with transformer
+            seq_repr = self.process_sequence(passband_data, passband_mask)  # (batch_size, hidden_dim)
+            passband_representations.append(seq_repr)
         
-        # Concatenate contexts from all passbands
-        combined = torch.cat(passband_contexts, dim=1)  # (batch_size, num_passbands*hidden_dim*2)
+        # Concatenate representations from all passbands
+        combined = torch.cat(passband_representations, dim=1)  # (batch_size, num_passbands*hidden_dim)
         
         # Concatenate with metadata features
         combined = torch.cat([combined, metadata_features], dim=1)
@@ -242,11 +245,10 @@ class AstroClassifier(nn.Module):
         # Fully connected layers
         x = self.fc_layers(combined)
         
-        # Output layer - returns logits
+        # Output layer
         logits = self.output(x)
-        
+         
         return logits
-
 # Learning rate scheduler with warmup
 class WarmupCosineScheduler:
     def __init__(self, optimizer, warmup_epochs, total_epochs, min_lr=1e-6):
@@ -472,8 +474,8 @@ def predict(model, test_loader, device):
 # Main execution function
 def main():
     # Load data
-    meta_data = pd.read_csv('training_set_metadata.csv')
-    training_set = pd.read_csv("training_set.csv")
+    meta_data = pd.read_csv('/kaggle/input/ml-astro/training_set_metadata.csv')
+    training_set = pd.read_csv("/kaggle/input/ml-astro/training_set.csv")
     targets = np.hstack([np.unique(meta_data['target']), [99]])
     target_map = {j:i for i, j in enumerate(targets)}
     target_ids = [target_map[i] for i in meta_data['target']]
@@ -494,7 +496,7 @@ def main():
     hidden_dim = 128
     num_layers = 2
     dropout = 0.4
-    mixup_alpha = 0.2  # Mixup augmentation parameter
+    mixup_alpha = 0.0  # Mixup augmentation parameter
     
     # Get unique object IDs
     train_object_ids = meta_data.object_id.values
@@ -532,7 +534,6 @@ def main():
         input_dim=input_dim,
         hidden_dim=hidden_dim,
         metadata_dim=metadata_dim,
-        num_layers=num_layers,
         dropout=dropout,
         num_classes=num_classes
     )
